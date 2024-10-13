@@ -1,15 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/task_list.dart';
+
 //cc
 class TaskScreen extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightBlueAccent,
-        onPressed: () {  },
+        onPressed: () {
+          showModalBottomSheet(context: context, builder: (context)=>Container());
+        },
         child: Icon(Icons.add),
       ),
       body: Column(
@@ -56,18 +61,7 @@ class TaskScreen extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0),topRight: Radius.circular(20.0)),
               ),
-              child: ListView(
-                children: [
-                  ListTile(
-                    title: Text('This is a task'),
-                    trailing: Checkbox(value: false, onChanged: (bool? value) {  },),
-                  ),
-                  ListTile(
-                    title: Text('This is a task'),
-                    trailing: Checkbox(value: false, onChanged: (bool? value) {  },),
-                  )
-                ],
-              ),
+              child: TasksList(),
             ),
           ),
         ],
@@ -75,3 +69,7 @@ class TaskScreen extends StatelessWidget {
     );
   }
 }
+
+
+
+
