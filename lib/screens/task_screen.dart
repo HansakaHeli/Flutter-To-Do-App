@@ -1,10 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../models/Task.dart';
 import '../widgets/task_list.dart';
 import 'add_task_screens.dart';
 
-class TaskScreen extends StatelessWidget {
+class TaskScreen extends StatefulWidget {
+
+  @override
+  State<TaskScreen> createState() => _TaskScreenState();
+}
+
+class _TaskScreenState extends State<TaskScreen> {
+
+  List<Task> tasks = [
+    Task(name:'Buy milk'),
+    Task(name:'Buy eggs'),
+    Task(name:'Buy bread'),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +26,16 @@ class TaskScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightBlueAccent,
         onPressed: () {
-          showModalBottomSheet(context: context, builder: (context)=>AddTaskScreen());
+          showModalBottomSheet(
+              context: context,
+              builder: (context)=>
+                  AddTaskScreen((newTaskTitle){
+                    setState(() {
+                      tasks.add(Task(name: newTaskTitle));
+                    });
+                    Navigator.pop(context);
+                  })
+          );
         },
         child: Icon(Icons.add),
       ),
@@ -45,7 +67,7 @@ class TaskScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '12 Tasks',
+                  '${tasks.length} Tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -61,7 +83,7 @@ class TaskScreen extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0),topRight: Radius.circular(20.0)),
               ),
-              child: TasksList(),
+              child: TasksList(tasks),
             ),
           ),
         ],
